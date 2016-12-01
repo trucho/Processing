@@ -2,12 +2,12 @@
 # Created Nov_2016 (jangueyra@bard.edu)
  
 # Description:
-    # Population is laid out on canvas randomly
-    # Each subject makes a 2D random walk
-    # Mouse hovering over subjects interrupts random walk
-    # Mouse clicking a subject infects it
-    # Infected subjects have chance to become zombies
-    # Zombies infect nearby subjects
+#     Population is laid out on canvas randomly
+#     Each subject makes a 2D random walk
+#     Mouse hovering over subjects interrupts random walk
+#     Mouse clicking a subject infects it
+#     Infected subjects have chance to become zombies
+#     Zombies infect nearby subjects
 from ghost import Ghost
 # simulation parameters
 canvasX = 600
@@ -16,7 +16,7 @@ canvasC = 255 / 2
 
 nGhosts = 200
 zombifyProb = .05
-infectionProb = .1
+infectionProb = .01
 
 initialX = []
 initialY = []
@@ -47,7 +47,8 @@ def draw():  # happens every frame (Processing default)
             for otherghost in ghosts:
                 if ghost != otherghost and \
                    ghost.x - ghost.w < otherghost.x < ghost.x + ghost.w and \
-                   ghost.y - ghost.h < otherghost.y < ghost.y + ghost.h:
+                   ghost.y - ghost.h < otherghost.y < ghost.y + ghost.h and \
+                       otherghost.status != 'zombie':
                     if infectionProb > random(0, 1):
                         otherghost.status = 'infected'
     # update all ghosts
