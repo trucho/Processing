@@ -12,6 +12,8 @@ class jghost {
   int name_i = int(random(4)); // identity
   String name;
   color c;
+  float t_xwalk = 0; // for movement
+  float t_ywalk = 0; // for movement
 
   jghost (float xpos, float ypos, float sze) {
     x = xpos;
@@ -19,16 +21,16 @@ class jghost {
     w = sze;
     h = w * 7 /8;
     d = random(0, TWO_PI);
-    if (name_i == 1) {
+    if (name_i == 0) {
       name = "blinky";
       c = color(255, 0, 0);
-    } else if (name_i == 2) {
+    } else if (name_i == 1) {
       name = "pinky";
       c = color(255, 184, 222);
     } else if (name_i == 2) {
       name = "inky";
       c = color(0, 255, 255);
-    } else if (name_i == 2) {
+    } else if (name_i == 3) {
       name = "clyde";
       c = color(255, 184, 71);
     } else {
@@ -38,11 +40,9 @@ class jghost {
 
   void display() {
     checkFrame();
-    noStroke();
-    fill(0);
-    arc(x, y, w, h, -PI, 0, OPEN);
-    rect(x, y+h/6, w, h*3/8);
+    
     diffuse();
+    susceptible();
   }
 
   void infected() {
@@ -65,12 +65,44 @@ class jghost {
     noStroke();
     fill(zcolor);
     arc(x, y, w, w, PI/6, TWO_PI-PI/6, PIE);
+    // update animation
     if (sprite==0) {
       fill(zcolor);
     } else if (sprite==1) {
       fill(zcolor);
       arc(x, y, w, w, PI/24, TWO_PI -PI/24, PIE);
     }
+  }
+
+  void drawBody(color ghost_color) {
+    // body
+    noStroke();
+    fill(ghost_color);
+    arc(x, y, w, h, -PI, 0, OPEN);
+    rect(x, y+h/6, w, h*3/8);
+    // skirt
+    if (sprite==0) {
+      triangle(x-w/2, y, x-w/2, y+w/2, x, y);
+      triangle(x+w/2, y, x+w/2, y+w/2, x, y);
+      triangle(x-w/4, y+h/4, x, y+w/2, x, y);
+      triangle(x+w/4, y+h/4, x, y+w/2, x, y);
+    } else if (sprite==1) {
+      triangle(x-w/2, y+h/3, x-w/5, y+h/3, x-w/2.5, y+w/2);
+      triangle(x+w/2, y+h/3, x+w/5, y+h/3, x+w/2.5, y+w/2);
+      triangle(x-w*2/8, y+h/3, x, y+h/3, x-w/8, y+w/2);
+      triangle(x+w*2/8, y+h/3, x, y+h/3, x+w/8, y+w/2);
+    }
+  }
+
+  void drawEyes() {
+    // eyes
+    fill(255);
+    ellipse(x+w*25/80, y-w/16, w/4, w/4);
+    ellipse(x-w*5/80, y-w/16, w/4, w/4);
+    // pupils
+    fill(0);
+    ellipse(x+w*30/80, y-w/16, w*6/80, w*6/80);
+    ellipse(x, y-w/16, w*6/80, w*6/80);
   }
 
   void checkFrame() {
@@ -92,6 +124,9 @@ class jghost {
 
   void diffuse() {
     // move randomly in x and y
+    //x += w/10 * cos(d);
+    //y += h/10 * sin(d);
+    
     x += (random(-w, w)/10) + w/10 * cos(d);
     y += (random(-h, h)/10) + h/10 * sin(d);
     // check if ghost is floating away from canvas
@@ -104,6 +139,7 @@ class jghost {
     } else if (y > height) {
       d = random (PI, TWO_PI);
     }
+
     //if (x < 0) {
     //  x = 0 + w/2;
     //} else if (x > width) {

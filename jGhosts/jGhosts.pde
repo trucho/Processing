@@ -13,7 +13,7 @@
 int canvasX = 600;
 int canvasY = 600;
 float canvasC = 255/2;
-int nGhosts = 200;
+int nGhosts = 5;
 float zombifyProb = 0.05;
 float infectionProb = 0.1;
 
@@ -32,6 +32,8 @@ void setup() {
   for (int i=0; i<nGhosts; i++) {
     initialX[i] = int(random(0, canvasX));
     initialY[i] = int(random(0, canvasY));
+    println(initialX[i]);
+    println(initialY[i]);
     g[i] = new jghost(initialX[i], initialY[i], 40);
   }
 }
