@@ -40,9 +40,29 @@ class jghost {
 
   void display() {
     checkFrame();
-    
-    diffuse();
-    susceptible();
+    if (status=="infected") {
+      if (mouseOver) {
+        if (mousePressed) {
+          status="marked";
+        }
+      }
+      diffuse();
+      infected();
+    } else if (status=="zombie") {
+      diffuse();
+      zombie();
+    } else {
+      if (mouseOver) {
+        marked();
+        status="marked";
+        if (mousePressed) {
+          status="infected";
+        }
+      } else {
+        diffuse();
+        susceptible();
+      }
+    }
   }
 
   void infected() {
@@ -79,7 +99,7 @@ class jghost {
     noStroke();
     fill(ghost_color);
     arc(x, y, w, h, -PI, 0, OPEN);
-    rect(x, y+h/6, w, h*3/8);
+    rect(x, y+h/6-1, w, 1+h*3/8);
     // skirt
     if (sprite==0) {
       triangle(x-w/2, y, x-w/2, y+w/2, x, y);
@@ -123,20 +143,19 @@ class jghost {
   }
 
   void diffuse() {
-    // move randomly in x and y
+    // move towards a random direction
+    x += (random(-w, w)/20) + w/10 * cos(d);
+    y += (random(-h, h)/20) + h/10 * sin(d);
     //x += w/10 * cos(d);
     //y += h/10 * sin(d);
-    
-    x += (random(-w, w)/10) + w/10 * cos(d);
-    y += (random(-h, h)/10) + h/10 * sin(d);
-    // check if ghost is floating away from canvas
-    if (x < 0) {
+    // check if ghost is floating away from canvas and bounce back in
+    if (x-w/2 < 0) {
       d = random (-HALF_PI, HALF_PI);
-    } else if (x > width) {
+    } else if (x+w/2 > width) {
       d = random (HALF_PI, PI*3/4);
-    } else if (y < 0) {
+    } else if (y-h/2 < 0) {
       d = random (0, PI);
-    } else if (y > height) {
+    } else if (y+h/2 > height) {
       d = random (PI, TWO_PI);
     }
 
@@ -150,5 +169,13 @@ class jghost {
     //} else if (y > height) {
     //  y = height + h/2;
     //}
+  }
+
+  boolean overlap(jghost otherghost) {
+    if (x-w/2 < otherghost.x && otherghost.x < x+w/2 && y-h/2 <otherghost.y && otherghost.y<y+h/2 && this!=otherghost) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }
