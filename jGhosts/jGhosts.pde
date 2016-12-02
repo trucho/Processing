@@ -40,11 +40,12 @@ void setup() {
 void draw() {
   background(canvasC);
   for (int i=0; i<nGhosts; i++) {
-    //infected ghosts con become zombies
     if (g[i].status == "infected") {
+      //infected ghosts can become zombies
       if (zombifyProb < random(0, 1)) {
-        g[i].status = 'zombie';
-      } else if () {
+        g[i].status = "zombie";
+      } else if (g[i].status == "infected") {
+        //check if zombie ghosts have neighbors that can be infected
       }
     }
   }
