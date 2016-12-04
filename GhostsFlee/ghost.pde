@@ -3,9 +3,9 @@
 // Infected if clicked, then chance of zombifying. Zombies can infect
 // nearby ghosts.
 
-class jghost {
+class ghost {
   float x, y, w, h; //x and y, width and heigth
-  float d; //moving direction
+  float d; //moving angle
   int sprite = 0; //animation statis
   boolean mouseOver = false; //detection of mouse hovering over
   String status = "susceptible"; // current status
@@ -14,13 +14,21 @@ class jghost {
   color c;
   float t_xwalk = 0; // for movement
   float t_ywalk = 0; // for movement
+  float immuneProb = .80;
+  ghost nearestZombie;
+  ghost nearestTarget;
 
-  jghost (float xpos, float ypos, float sze) {
+  ghost (float xpos, float ypos, float sze) {
     x = xpos;
     y = ypos;
     w = sze;
     h = w * 7 /8;
     d = random(0, TWO_PI);
+    if (random(0,1)<immuneProb) {
+      status = "immune";
+    }
+    nearestZombie = this; // initialize as itself
+    nearestTarget = this; // initialize as itself
     if (name_i == 0) {
       name = "blinky";
       c = color(255, 0, 0);
@@ -38,7 +46,7 @@ class jghost {
     }
   }
 
-  void display() {
+  void display(String mode) {
     checkFrame();
     if (status=="infected") {
       if (mouseOver) {
@@ -46,11 +54,14 @@ class jghost {
           status="marked";
         }
       }
-      diffuse();
+      move(mode);
       infected();
     } else if (status=="zombie") {
-      diffuse();
+      move(mode);
       zombie();
+    } else if (status=="immune") {
+      move(mode);
+      immune();
     } else {
       if (mouseOver) {
         marked();
@@ -59,7 +70,7 @@ class jghost {
           status="infected";
         }
       } else {
-        diffuse();
+        move(mode);
         susceptible();
       }
     }
@@ -92,6 +103,11 @@ class jghost {
       fill(zcolor);
       arc(x, y, w, w, PI/24, TWO_PI -PI/24, PIE);
     }
+  }
+  
+  void immune(){
+    drawBody(color(255/2));
+    drawEyes();
   }
 
   void drawBody(color ghost_color) {
@@ -142,40 +158,69 @@ class jghost {
     }
   }
 
-  void diffuse() {
-    // move towards a random direction
-    x += (random(-w, w)/20) + w/10 * cos(d);
-    y += (random(-h, h)/20) + h/10 * sin(d);
-    //x += w/10 * cos(d);
-    //y += h/10 * sin(d);
-    // check if ghost is floating away from canvas and bounce back in
-    if (x-w/2 < 0) {
-      d = random (-HALF_PI, HALF_PI);
-    } else if (x+w/2 > width) {
-      d = random (HALF_PI, PI*3/4);
-    } else if (y-h/2 < 0) {
-      d = random (0, PI);
-    } else if (y+h/2 > height) {
-      d = random (PI, TWO_PI);
-    }
-
-    //if (x < 0) {
-    //  x = 0 + w/2;
-    //} else if (x > width) {
-    //  x = width - w/2;
-    //}
-    //if (y < 0) {
-    //  y = 0 + h/2;
-    //} else if (y > height) {
-    //  y = height + h/2;
-    //}
-  }
-
-  boolean overlap(jghost otherghost) {
+  boolean overlap(ghost otherghost) {
     if (x-w/2 < otherghost.x && otherghost.x < x+w/2 && y-h/2 <otherghost.y && otherghost.y<y+h/2 && this!=otherghost) {
       return true;
     } else {
       return false;
     }
+  }
+
+  float calcDist(ghost otherghost) {
+    return sqrt(sq(x-otherghost.x)) + (sq(y-otherghost.y));
+  }
+
+  float calcAngle(ghost otherghost) {
+    return atan((y-otherghost.y)/(x-otherghost.x));
+  }
+
+  void move(String mode) {
+    if (mode == "normal") {
+      diffuse();
+    } else if (mode == "panic") {
+      if (status == "zombie") {
+        diffuse();
+      } else {
+       flee(); 
+      }
+    } else {
+      diffuse();
+    }
+    // check if ghost is floating away from canvas and bounce back in
+    if (x-w/2 < 0) {
+      x=w/2;
+      d = random (-HALF_PI, HALF_PI);
+      diffuse();
+    } else if (x+w/2 > width) {
+      x = width - w/2;
+      d = random (HALF_PI, PI*3/4);
+      diffuse();
+    } 
+    if (y-h/2 < 0) {
+      y = h/2;
+      d = random (0, PI);
+      diffuse();
+    } else if (y+h/2 > height) {
+      y = height - h/2;
+      d = random (PI, TWO_PI);
+      diffuse();
+    }
+  }
+
+  void flee() {
+    if (this == nearestZombie) {
+      diffuse();
+    } else {
+      d = calcAngle(this.nearestZombie);
+      // move towards a random direction
+      x += (random(-w, w)/20) + w/10 * cos(d);
+      y += (random(-h, h)/20) + h/10 * sin(d);
+    }
+  }
+
+  void diffuse() {
+    // move towards a random direction
+    x += (random(-w, w)/20) + w/10 * cos(d);
+    y += (random(-h, h)/20) + h/10 * sin(d);
   }
 }
