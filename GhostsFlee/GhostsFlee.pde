@@ -13,7 +13,7 @@
 int canvasX = 600;
 int canvasY = 600;
 float canvasC = 255/2;
-int nGhosts = 200;
+int nGhosts = 50;
 float zombifyProb = 0.05;
 float infectionProb = 0.1;
 
@@ -21,7 +21,7 @@ float infectionProb = 0.1;
 // "normal" -> ghosts move semi-randomly towards a given direction and bounce on edges of canvas
 // "panic" -> every ghosts tries to flee from nearest zombie and zombies try to get nearest ghost
 // "fight" -> ghosts attempt to get rid of zombies
-String mode = "normal";
+String mode = "flee";
 
 ghost[] g = new ghost[nGhosts];
 int[] initialX = new int[nGhosts];
@@ -77,7 +77,7 @@ void draw() {
   for (int i=0; i<nGhosts; i++) {
     g[i].display(mode);
     // check who the nearest target is
-    //stroke(255);
-    //line(g[i].x,g[i].y,g[i].nearestZombie.x,g[i].nearestZombie.y);
+    stroke(255);
+    line(g[i].x,g[i].y,g[i].nearestZombie.x,g[i].nearestZombie.y);
   }
 }

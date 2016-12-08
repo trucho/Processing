@@ -14,8 +14,8 @@ int canvasX = 600;
 int canvasY = 600;
 float canvasC = 255/2;
 int nGhosts = 200;
-float zombifyProb = 0.05;
-float infectionProb = 0.1;
+float zombifyProb = 0.1;
+float infectionProb = 0.2;
 
 ghost[] g = new ghost[nGhosts];
 int[] initialX = new int[nGhosts];

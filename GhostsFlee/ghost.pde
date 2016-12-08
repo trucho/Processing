@@ -14,7 +14,7 @@ class ghost {
   color c;
   float t_xwalk = 0; // for movement
   float t_ywalk = 0; // for movement
-  float immuneProb = .80;
+  float immuneProb = .00;
   ghost nearestZombie;
   ghost nearestTarget;
 
