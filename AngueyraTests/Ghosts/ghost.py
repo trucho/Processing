@@ -125,8 +125,8 @@ class Ghost(object):
         #
 
     def diffuse(self):
-        self.x = self.x + random(-self.w, self.w) / 10
-        self.y = self.y + random(-self.h, self.h) / 10
+        # self.x = self.x + random(-self.w, self.w) / 10
+        # self.y = self.y + random(-self.h, self.h) / 10
         if self.x < 0:
             self.x = 0 + self.w
         elif self.x > width:

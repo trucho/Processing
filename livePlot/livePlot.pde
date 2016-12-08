@@ -3,36 +3,43 @@
  */
 
 // A Table object
-Table table;
-int[] x = new int[4];
-int[] y = new int[4];
-float r = 20;
+Table nCounts;
+int[] nFrame;
+int[] nT;
+int[] nS;
+int[] nI;
+int[] nZ;
+float r = 2;
 
 void setup() {
-  size(240, 240);
-  loadData();
+  size(600, 600);
   ellipseMode(CENTER);
 }
 
 void draw() {
+  loadData();
   background(255);
   stroke(0);
-  fill(0);
-  for (int i=0; i<4; i++) {
-    ellipse(x[i], y[i], r, r);
+  //fill(0);
+  noFill();
+  beginShape();
+  int rowCount = 0;
+  for (int i=0; i < nCounts.getRowCount(); i++) {
+    curveVertex(nFrame[i], nZ[i]);
   }
+  endShape();
 }
 
 void loadData() {
   // Load CSV file into a Table object
   // "header" option indicates the file has a header row
-  table = loadTable("test.csv", "header");
+  nCounts = loadTable("nCounts.csv", "header");
+  nFrame = new int[nCounts.getRowCount()]; //<>//
+  nZ = new int[nCounts.getRowCount()];
   // You can access iterate over all the rows in a table
-  int rowCount = 0;
-  for (TableRow row : table.rows()) {
-    // You can access the fields via their column name (or index)
-    x[rowCount] = row.getInt("x");
-    y[rowCount] = row.getInt("y");
-    rowCount++;
+  for (int i=0; i < nCounts.getRowCount(); i++) {
+    println(i);
+    nFrame[i] = nCounts.getInt(i, "nFrame");
+    nZ[i] = nCounts.getInt(i, "nZ");
   }
 }

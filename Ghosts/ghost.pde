@@ -14,7 +14,7 @@ class ghost {
   color c;
   float t_xwalk = 0; // for movement
   float t_ywalk = 0; // for movement
-  float immuneProb = 0.8;
+  float immuneProb = 0.0;
 
   ghost (float xpos, float ypos, float sze) {
     x = xpos;
