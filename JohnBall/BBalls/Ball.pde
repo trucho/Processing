@@ -20,8 +20,8 @@ class Ball {
   Ball(float X, float Y) {
     //Initialize parameters. This check for quickAddMode helps things settle more quickly
     if (quickAddMode) {
-      px = 75*randomGaussian()+X; 
-      py = 75*randomGaussian()+Y;
+      px = 10*randomGaussian()+X; 
+      py = 10*randomGaussian()+Y;
     } else {
       px = X; 
       py = Y;

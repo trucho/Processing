@@ -1,26 +1,26 @@
-//Numerical simulation of SIRZ model
+//Numerical simulation of SIZ model
 //Created Nov_2016 (jangueyra@bard.edu)
 
 //Description:
 //    Population is laid out on canvas randomly
-//    Each subject makes a 2D random walk
-//    Mouse hovering over subjects interrupts random walk
+//    Each subject moves towards a random direction and bounces off the walls
+//    Mouse hovering over subjects interrupts movement
 //    Mouse clicking a subject infects it
 //    Infected subjects have chance to become zombies
 //    Zombies infect nearby subjects
 
 // Simulation parameters
-int canvasX = 600;
-int canvasY = 600;
-float canvasC = 255/2;
-int nGhosts = 200;
-float zombifyProb = 0.1;
-float infectionProb = 0.2;
-Table nCounts = new Table();
-int nFrame = 0;
-int nS = 0;
-int nI = 0;
-int nZ = 0;
+int canvasX = 600; //size of the canvas
+int canvasY = 600; //size of the canvas
+float canvasC = 255/2; //color of the canvas
+int nGhosts = 200; //number of ghosts
+float zombifyProb = 0.1; //probability per frame to go from infected to zombie
+float infectionProb = 0.2; //probability per frame for zombie to bite nearby ghosts
+Table nCounts = new Table(); //table to save data
+int nFrame = 0; //time axis (in units of frames)
+int nS = 0; //count of susceptible subjects (updates every frame)
+int nI = 0; //count of infected subjects (updates every frame)
+int nZ = 0; //count of zombie subjects (updates every frame)
 
 
 

@@ -8,16 +8,16 @@ boolean unClicked = true;       //Must be true for correct functioning
 
 //Here's the set of parameters to play with
 boolean quickAddMode = true;    //False-> one ball per click. True->hold to create many
-boolean randomSizes = false;    //False-> same size for all. True->pick from range
+boolean randomSizes = true;    //False-> same size for all. True->pick from range
 
 int rad_min = 5;            //Smallest radius when randomSizes = true
 int rad_max = 20;           // Largest radius when randomSizes = true
 int rad_const = 25;         //Radius when randomSizes = false
 
-int jiggle_coefficient = 10;     //Suggested range: 0.0->50.0 
+int jiggle_coefficient = 0;     //Suggested range: 0.0->50.0 
 int drag_coefficient = 1;       //Suggested range: 0.1->5.0
-int push_coefficient = 50;      //Suggested range: 2.0->25.0
-int pull_coefficient = 5;      //Suggested range: 0.1->20.0
+int push_coefficient = 10;      //Suggested range: 2.0->25.0
+int pull_coefficient = 0;      //Suggested range: 0.1->20.0
 
 void setup() {
   size(500, 400);
