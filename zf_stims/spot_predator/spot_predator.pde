@@ -1,7 +1,7 @@
 float pSpeed = 3;
 float pTheta = 0;
 float pRadius = 20;
-color pColor = color(125, 0, 0);
+color pColor = color(250, 0, 0);
 Predator p;
  
 void setup() {

@@ -1,5 +1,6 @@
 class Predator {
   float x, y, speed, theta, r;
+  float ix, iy;
   color c;
   int n = 6;
   //PShape P;
@@ -7,6 +8,8 @@ class Predator {
   Predator (float pX, float pY, float pR, float pSpeed, float pDirection, color pColor){
     x = pX;
     y = pY;
+    ix = pX;
+    iy = pY;
     r = pR;
     speed = pSpeed;
     theta = pDirection;
@@ -18,9 +21,12 @@ class Predator {
   
   void update() {
     x = x + cos(theta)*speed;
-    y = y + random(-r/20, r/20) + sin(theta)*speed;
+    y = y + random(-r/5, r/5) + sin(theta)*speed;
     
-    if (x>width){x=-r;}
+    if (x>width){
+      x = ix;
+      y = iy;
+    }
   }
   void display() {
     //shape(P);
