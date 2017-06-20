@@ -13,7 +13,7 @@ class donut {
     s = createShape();
     s.beginShape();
     // Set fill and stroke
-    s.fill(00);
+    s.fill(0);
     noStroke();
     // Exterior part of shape
     for (float a = 0; a < TWO_PI; a += 0.1) {

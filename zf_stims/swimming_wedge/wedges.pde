@@ -5,19 +5,18 @@ class wedges {
   color c;
   PShape[] ws;
 
-  wedges (float wedgeX, float wedgeY, float wedgeR, int wedgeN, color wedgeC) {
+  wedges (float wedgeX, float wedgeY, float wedgeR, int wedgeN, color foreC) {
     x = wedgeX; // x position
     y = wedgeY; // y position
     r = wedgeR; // radius
     n = wedgeN; // number of divisions
-    c = wedgeC; // color
+    c = foreC; // foreground color
     phase = 0;
     ws = new PShape[n];
 
     // First create the shape
     for (int a = 0; a <= n-1; a += 2) {
       ws[a] = createShape(ARC, x, y, r, r, a*TWO_PI/n, (a+1)*TWO_PI/n, PIE);
-      //ws[a] = createShape(ARC, x, y, r, r, a*TWO_PI/n, (a+1)*TWO_PI/n, PIE);
       ws[a].setFill(c);
     }
   }
