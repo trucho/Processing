@@ -3,8 +3,8 @@ float canvasX = 1300;
 float canvasY = 750;
 donut Mask;
 wedges rotStim;
-color backC = color(255,255,0);
-color foreC = color(255);
+color backC = color(20, 0, 0);
+color foreC = color(0, 20, 0);
 float nowS;
 
 int nWedges = 50; //keep this number as even (not odd)
@@ -25,7 +25,7 @@ void draw () {
   background(backC);
   nowS = millis() / 1000.0;
   rotNow = TWO_PI*nowS/rotPeriod;
-  rotate(-rotNow);
+  rotate(rotNow);
   rotStim.display();
   //filter(BLUR,1);
   Mask.display();

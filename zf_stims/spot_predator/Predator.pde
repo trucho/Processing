@@ -3,6 +3,8 @@ class Predator {
   float ix, iy;
   color c;
   int n = 6;
+  float[] randomwalk = new float[width];
+  int randindex;
   //PShape P;
   
   Predator (float pX, float pY, float pR, float pSpeed, float pDirection, color pColor){
@@ -15,13 +17,15 @@ class Predator {
     theta = pDirection;
     c = pColor;
     
-    //P = createShape(ELLIPSE,x,y,r,r);
-    //P.setFill(c);
+    for (int i=0; i==width+r; i++){
+      randomwalk[i] = random(-r/5, r/5);
+    }
   }
   
   void update() {
     x = x + cos(theta)*speed;
-    y = y + random(-r/5, r/5) + sin(theta)*speed;
+    y = y + sin(theta)*speed;
+    //y = y + randomwalk[round(x)] + sin(theta)*speed;
     
     if (x>width){
       x = ix;
