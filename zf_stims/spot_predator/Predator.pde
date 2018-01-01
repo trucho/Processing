@@ -8,8 +8,8 @@ class Predator {
   //PShape P;
   
   Predator (float pX, float pY, float pR, float pSpeed, float pDirection, color pColor){
-    x = pX;
-    y = pY;
+    x = pX+random(0,width/4);
+    y = height*random(pY*100,(1-pY)*100)/100;
     ix = pX;
     iy = pY;
     r = pR;
@@ -27,9 +27,10 @@ class Predator {
     y = y + sin(theta)*speed;
     //y = y + randomwalk[round(x)] + sin(theta)*speed;
     
-    if (x>width){
+    if (x>width*.75){
       x = ix;
-      y = iy;
+      y = height*random(iy*100,(1-iy)*100)/100;
+      //speed = speed + random(-speed*100,+speed*100)/(100*2);
     }
   }
   void display() {

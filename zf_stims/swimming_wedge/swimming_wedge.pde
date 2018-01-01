@@ -3,7 +3,7 @@ float canvasX = 1300;
 float canvasY = 750;
 donut Mask;
 wedges rotStim;
-color backC = color(20, 0, 0);
+color backC = color(255, 0,0);
 color foreC = color(0, 20, 0);
 float nowS;
 
