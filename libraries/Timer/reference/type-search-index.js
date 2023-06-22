@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"All Classes and Interfaces","u":"allclasses-index.html"},{"p":"org.guilhermesilveira","l":"Callback"},{"p":"org.guilhermesilveira","l":"Timer"},{"p":"org.guilhermesilveira","l":"Timers"}];updateSearchResults();
