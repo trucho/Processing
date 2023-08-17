@@ -23,8 +23,8 @@ int fps = 60;
 //float barSpeed = 126/fps;
 // Read paper stating that they use sine wave with 56 mm wavelength and .98Hz frequency
 // This should roughly translate to barWidth of 32 mm = 3.2 cm (HUGE!)
-float barWidth = 12.6*15; //10: not working well as of Mar18/20
-float barSpeed = barWidth*1.5/fps; //*2: not working well as of Mar18/20
+float barWidth = 12.6*10; //10: not working well as of Mar18/20
+float barSpeed = barWidth*10/fps; //*2: not working well as of Mar18/20
 float x,y;
 float r = 50;
 float d2pixel = 800/110;
@@ -34,7 +34,9 @@ color wColor = color(255,255,255);
 color lColor = color(200,0,0);
 grating gt;
 int value = 1;
+int direction = 1;
 boolean upflag = true;
+boolean directionFlag = false; 
 int Timer_absStart = 0;
 int Timer_absNow = 0;
 int Timer_start = -1; // in ms
@@ -80,8 +82,16 @@ void keyPressed() {
       print("autoRun START\n");
       waitStim();
   }
+  else if(key == 'i') {
+      print("direction change\n");
+      switchDirection();
+  }
 } 
 
+void switchDirection(){
+  if (directionFlag) {directionFlag = false;}
+    else {directionFlag = true;}
+}
 
 void waitStim(){
   value = 1;
@@ -113,6 +123,9 @@ void draw () {
         print("autoRun END\n\n");
       }
       else {
+        if (Timer_absNow>Timer_start+Timer_waitFor+Timer_runFor*3/4) {directionFlag = true;}
+        else if ((Timer_absNow>Timer_start+Timer_waitFor+Timer_runFor/4) && (Timer_absNow<Timer_start+Timer_waitFor+Timer_runFor/2)) {directionFlag = true;}
+        else {directionFlag = false;} 
         startStim();
       }
     }
@@ -122,6 +135,6 @@ void draw () {
   noFill();
   fill(kColor);
   // grating
-  gt.update(upflag);
+  gt.update(upflag, directionFlag);
   gt.display();
 }

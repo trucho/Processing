@@ -1,11 +1,13 @@
-let scaleFactor = 2;
+let scaleFactor = 1;
 let canvasSize;
 let sBars = [];
 let nBars = 4
 let xValues = [];
 let wBars;
 let modeFlag;
-let interval = .2;
+let interval = 0.2;
+
+// still need to make variable intervals for gray frame 
 
 class splitBar {
   constructor(x, y, w, h) {
@@ -13,20 +15,20 @@ class splitBar {
     this.y = y;
     this.w = w;
     this.h = h;
-    this.color = '#1BCC07';
+    this.color1 = '#1BCC07';
     this.color2 = '#BF141B';
   }
   
   display(mode) {
     //noStroke();
     if (mode==1) {
-    fill(this.color);
-    rect(this.x,this.y,this.w,this.h);}
+      fill(this.color1);
+      rect(this.x,this.y,this.w,this.h);}
     else if(mode==3) {
-      fill(this.color);
-      rect(this.x+this.w/4,this.y,this.w,this.h);}
+      fill(this.color1);
+      rect(this.x+this.w/2,this.y,this.w,this.h);}
     else if(mode==2) {
-      
+
     }
   }
 }
@@ -37,7 +39,7 @@ function setup() {
   modeFlag = 1;
   wBars = canvasSize/(2*nBars);
   for (let i = 0; i < nBars; i++) {
-    xValues[i] = wBars*2 * i;
+    xValues[i] = wBars * 2 * i;
     sBars.push(new splitBar(xValues[i],0,wBars,height));
   }
   frameRate(30);

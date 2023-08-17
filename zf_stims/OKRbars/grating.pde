@@ -1,5 +1,5 @@
 class grating {
-  float barW, barSp, barH, barMax;
+  float barW, barSp, barH, barMax, barMin;
   int nBars;
   float[] barX;
   float[] barY;
@@ -15,6 +15,7 @@ class grating {
      nBars = nBars+1; 
     }
     barMax = (barW * nBars)+ barW*2;
+    barMin = -barW;
     barX = new float[nBars];
     barY = new float[nBars];
     barR = new float[nBars];
@@ -26,11 +27,17 @@ class grating {
     
   }
   
-  void update(boolean upflag) {
+  void update(boolean upflag, boolean directionFlag) {
     if (upflag) {
       for (int n = 0; n < nBars; n++){
-        barX[n] = barX[n] + barSp;
-        if (barX[n]>barMax) {barX[n] = -barW;}
+        if (directionFlag) {
+          barX[n] = barX[n] + barSp;
+          if (barX[n]>barMax) {barX[n] = -barW;}
+        }
+        else {
+          barX[n] = barX[n] - barSp;
+          if (barX[n]<barMin) {barX[n] = barMax;}
+        }
       }
     }
   }
