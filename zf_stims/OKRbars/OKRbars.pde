@@ -23,15 +23,16 @@ int fps = 60;
 //float barSpeed = 126/fps;
 // Read paper stating that they use sine wave with 56 mm wavelength and .98Hz frequency
 // This should roughly translate to barWidth of 32 mm = 3.2 cm (HUGE!)
-float barWidth = 12.6*10; //10: not working well as of Mar18/20
-float barSpeed = barWidth*10/fps; //*2: not working well as of Mar18/20
+float barWidth = 125; //10: not working well as of Mar18/20
+float barSpeed = barWidth*5/fps; //*2: not working well as of Mar18/20
 float x,y;
 float r = 50;
 float d2pixel = 800/110;
-//color kColor = color(000,000,000); //initialize as ON 
-color kColor = color(255,255,255); //initializing as OFF
-color wColor = color(255,255,255);
-color lColor = color(200,0,0);
+float contrast = .5; //Weber contrast as fraction between 0 and 1
+color kColor = color(128-floor(128*contrast)); 
+color wColor = color(128+floor(128*contrast));
+//color nowColor = kColor; //initialize as ON
+color nowColor = wColor; //initialize as OFF
 grating gt;
 int value = 1;
 int direction = 1;
@@ -46,9 +47,9 @@ int Timer_runFor = 60 * 1000; // in ms
 boolean autoRun = false;
 
 // Arduino Interaction
-import processing.serial.*;
-Serial AUno;
-int ledAmp = 0;
+//import processing.serial.*;
+//Serial AUno;
+//int ledAmp = 0;
 
 void setup() {
   //size(800, 480, P2D); //adafruit screen
@@ -65,10 +66,10 @@ void keyPressed() {
   if(key == 'b') {
     if (value == 0) {
       value = 1;
-      kColor = color(255,255,255);
+      nowColor = wColor;
     } else {
       value = 0;
-      kColor = color(0,0,0);
+      nowColor = kColor;
     }
   }
   else if(key == 's') {
@@ -95,21 +96,21 @@ void switchDirection(){
 
 void waitStim(){
   value = 1;
-  kColor = color(255,255,255);
+  nowColor = wColor;
   Timer_start = Timer_absNow;
   autoRun = true;
 }
 
 void startStim(){
   value = 0;
-  kColor = color(0,0,0);
+  nowColor = kColor;
   //Timer_start = Timer_absNow;
   autoRun = true;
 }
 
 void stopStim(){
   value = 1;
-  kColor = color(255,255,255);
+  nowColor = wColor;
   Timer_start = -1;
   autoRun = false;
 }
@@ -133,7 +134,7 @@ void draw () {
   
   background(wColor);
   noFill();
-  fill(kColor);
+  fill(nowColor);
   // grating
   gt.update(upflag, directionFlag);
   gt.display();
