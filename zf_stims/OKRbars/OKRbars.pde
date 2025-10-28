@@ -28,7 +28,7 @@ float barSpeed = barWidth*5/fps; //*2: not working well as of Mar18/20
 float x,y;
 float r = 50;
 float d2pixel = 800/110;
-float contrast = .5; //Weber contrast as fraction between 0 and 1
+float contrast = .99; //Weber contrast as fraction between 0 and 1
 color kColor = color(128-floor(128*contrast)); 
 color wColor = color(128+floor(128*contrast));
 //color nowColor = kColor; //initialize as ON
