@@ -68,7 +68,7 @@ float phaseDrift = 0;
 
 float nowRefContrast = 0;
 float nowTestContrast = 0;
-boolean blankFlag = false;
+boolean blankFlag = true;
 boolean stopFlag = false;
 boolean directionFlag = false; 
 int Timer_absStart = 0;
